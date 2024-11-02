@@ -1,3 +1,4 @@
+@import url("./main.css");
 /* style.css */
 body {
     font-family: Arial, sans-serif;
@@ -20,7 +21,6 @@ header {
 }
 
 header nav ul {
-    
     margin-top: 30px;
     list-style-type: none;
     display: flex;
@@ -50,7 +50,8 @@ section {
     padding: 2em 0;
 }
 
-#contact form input, #contact form textarea {
+#contact form input,
+#contact form textarea {
     width: 100%;
     padding: 0.5em;
     margin: 0.5em 0;
@@ -62,6 +63,6 @@ footer {
     text-align: center;
     padding: 1em 0;
 }
-.footer_t{
+.footer_t {
     display: flex;
 }
