@@ -66,3 +66,16 @@ footer {
 .footer_t {
     display: flex;
 }
+.menuSeach{
+    display: flex;
+    margin-top: 10px;
+    margin-left: 30px;
+    justify-content: space-around;
+}
+.seachClass{
+    /* margin-right: 10px; */
+    width: 20%;
+}
+.seach{
+    width: 100%;
+}
