@@ -1,0 +1,31 @@
+@import url("./main.css");
+.container01 {
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+}
+
+header {
+    background: #333;
+    color: #fff;
+}
+
+header nav ul {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+    margin-bottom: 0 !important;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.sidebar > h3,
+.sidebar > ul {
+    padding-left: 12px;
+}
