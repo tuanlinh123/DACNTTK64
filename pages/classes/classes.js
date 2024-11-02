@@ -1,4 +1,4 @@
-import { gridConfigClasses, detailClasses } from "./gridConfigClasses.js";
+import { gridConfigClasses } from "./gridConfigClasses.js";
 import { getData } from "../../firebase/firebaseMethod.js";
 
 const getCodeRenderHeader = () => {
