@@ -29,4 +29,10 @@ export const gridConfigClasses = [
         width: 200,
         align: "center",
     },
+    {
+        field: "function",
+        headerName: "Thao tác",
+        width: 200,
+        align: "center",
+    },
 ];
