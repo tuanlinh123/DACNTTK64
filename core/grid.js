@@ -9,7 +9,22 @@ export const getCodeRenderHeader = (gridConfigUsers) => {
         </tr>
     `;
 };
+    const overlay = document.getElementById("overlay");
+    const windowElement = document.getElementById("window");
 
+    // Hàm mở cửa sổ
+    function openWindow() {
+      overlay.style.display = "flex";
+      windowElement.style.animation = "openWindow 0.5s forwards";
+    }
+
+    // Hàm đóng cửa sổ
+    function closeWindow() {
+      windowElement.style.animation = "closeWindow 0.5s forwards";
+      setTimeout(() => {
+        overlay.style.display = "none";
+      }, 500);
+    }
 export const getCodeRenderGrid = (dataClasses, gridConfig) => {
   return dataClasses
     .map((item, index) => {
