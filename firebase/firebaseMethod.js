@@ -68,10 +68,11 @@ export const signUp = async (email, password) => {
  * @param {*} email
  * @param {*} password
  */
-export const logIn = async (email, password) => {
+export const logIn = async (email, password, callback) => {
     try {
         await signInWithEmailAndPassword(auth, email, password);
         console.log("Login successfully");
+        callback();
     } catch (error) {
         console.error(error);
         console.error("Login failed");

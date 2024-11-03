@@ -1,6 +1,8 @@
 import { gridConfigClasses } from "./gridConfigClasses.js";
-import { getData } from "../../firebase/firebaseMethod.js";
+import { addData, getData } from "../../firebase/firebaseMethod.js";
 import { getCodeRenderHeader, getCodeRenderGrid } from "../../core/grid.js";
+import { checkAccOnLoad } from "../../core/auth.js";
+window.onload = () => checkAccOnLoad();
 
 const renderGridClasses = async (dataClasses) => {
     if (!dataClasses) dataClasses = await getData("classes");
