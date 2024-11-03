@@ -1,16 +1,16 @@
-import { gridConfigTeachers } from "./gridConfigTeachers.js";
+import { gridConfigStudents } from "./gridConfigStudents.js";
 import { getData } from "../../firebase/firebaseMethod.js";
 import { getCodeRenderHeader, getCodeRenderGrid } from "../../core/grid.js";
 import { checkAccOnLoad } from "../../core/auth.js";
 window.onload = () => checkAccOnLoad();
-const renderGridUsers = async (dataTeachers) => {
-    !dataTeachers && (dataTeachers = await getData("users"));
-    dataTeachers = dataTeachers.filter((x) => x.role == "teacher");
+const renderGridUsers = async (dataClasses) => {
+    !dataClasses && (dataClasses = await getData("users"));
+    dataClasses = dataClasses.filter((x) => x.role == "student");
     document.getElementById("header-classes").innerHTML =
-        getCodeRenderHeader(gridConfigTeachers);
+        getCodeRenderHeader(gridConfigStudents);
     document.getElementById("grid-classes").innerHTML = getCodeRenderGrid(
-        dataTeachers,
-        gridConfigTeachers
+        dataClasses,
+        gridConfigStudents
     );
 };
 
@@ -20,7 +20,7 @@ const onSearch = async () => {
     let dataClasses = await getData("users");
     dataClasses = dataClasses.filter(
         (x) =>
-            x.role == "teacher" &&
+            x.role == "student" &&
             (x.fullName.toLowerCase().includes(searchInput.toLowerCase()) ||
                 x.userCode.toLowerCase().includes(searchInput.toLowerCase()))
     );

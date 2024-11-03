@@ -1,32 +1,29 @@
-export const gridConfigUsers = [
+export const gridConfigStudents = [
     {
         headerName: "STT",
         width: 100,
     },
     {
         field: "userCode",
-        headerName: "Mã người dùng",
+        headerName: "Mã học viên",
         width: 350,
     },
     {
-        field: "userName",
+        field: "fullName",
         headerName: "Họ tên",
-        width: 300,
-    },
-    {
-        field: "role",
-        headerName: "Vai trò",
         width: 300,
     },
     {
         field: "dateOfBirth",
         headerName: "Ngày sinh",
         width: 250,
+        align: "center",
     },
     {
         field: "gender",
         headerName: "Giới tính",
         width: 300,
+        align: "center",
     },
     {
         field: "email",
@@ -37,5 +34,6 @@ export const gridConfigUsers = [
         field: "phoneNumber",
         headerName: "Số điện thoại",
         width: 200,
+        align: "center",
     },
 ];

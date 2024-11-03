@@ -4,12 +4,12 @@ export const gridConfigTeachers = [
         width: 100,
     },
     {
-        field: "teacherCode",
+        field: "userCode",
         headerName: "Mã giảng viên",
         width: 350,
     },
     {
-        field: "teacherName",
+        field: "fullName",
         headerName: "Họ tên",
         width: 300,
     },
@@ -17,11 +17,13 @@ export const gridConfigTeachers = [
         field: "dateOfBirth",
         headerName: "Ngày sinh",
         width: 250,
+        align: "center",
     },
     {
         field: "gender",
         headerName: "Giới tính",
         width: 300,
+        align: "center",
     },
     {
         field: "email",
@@ -32,5 +34,6 @@ export const gridConfigTeachers = [
         field: "phoneNumber",
         headerName: "Số điện thoại",
         width: 200,
+        align: "center",
     },
 ];

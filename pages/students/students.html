@@ -18,7 +18,7 @@
             referrerpolicy="no-referrer"
         />
         <link rel="stylesheet" href="../../css/admin/admin.css" />
-        <script type="module" src="./users.js"></script>
+        <script type="module" src="./students.js"></script>
     </head>
     <body class="row">
         <!-- SIDEBAR -->
@@ -105,13 +105,32 @@
                         justify-content: space-between;
                     "
                 >
-                    <h1 style="margin: 12px 0">Người dùng</h1>
+                    <h1 style="margin: 12px 0">Học viên</h1>
                     <button type="button" class="btn btn-success">
-                        Thêm người dùng
+                        Thêm học viên
                     </button>
                 </div>
+                <!-- Search bar -->
+                <form
+                    class="form-inline my-2 my-lg-0 col-3 d-flex"
+                    style="column-gap: 6px"
+                >
+                    <input
+                        class="form-control mr-sm-2 search-input"
+                        type="search"
+                        placeholder="Mã/Tên học viên"
+                        aria-label="Search"
+                    />
+                    <button
+                        class="btn btn-outline-success my-2 my-sm-0 search-btn"
+                        type="submit"
+                    >
+                        Tìm
+                    </button>
+                </form>
+                <!-- GRID -->
                 <table
-                    class="table"
+                    class="table mt-2"
                     style="
                         width: 100%;
                         display: block;
