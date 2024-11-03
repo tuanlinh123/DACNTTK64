@@ -36,7 +36,7 @@ header nav ul li a {
     background: #f4f4f4;
     padding: 2em 0;
     text-align: center;
-    background-image: url('https://images-proxy.mindx.edu.vn/1120x,webp/https://website-dev.hn.ss.bfcplatform.vn/340962698_1888401918182897_2966498731149865186_n_0dcf1d9a16.jpg');
+    background-image: url("https://images-proxy.mindx.edu.vn/1120x,webp/https://website-dev.hn.ss.bfcplatform.vn/340962698_1888401918182897_2966498731149865186_n_0dcf1d9a16.jpg");
     height: 600px;
     width: 90%;
     margin: 0px auto;
@@ -45,7 +45,7 @@ header nav ul li a {
     background-size: cover;
     box-shadow: 10px 10px 12px rgba(0, 0, 0, 0.341); /* Đổ bóng */
 }
-.containertl{
+.containertl {
     margin-top: 80px;
     color: #f4f4f4;
     text-shadow: 4px 6px 8px rgba(0, 0, 0, 0.623); /* Đổ bóng */
@@ -87,86 +87,81 @@ footer {
     display: flex;
 }
 
-.body_class{
-height:600px;
-margin-top: 40px;
-margin-left: 30px;
-margin-right: 10px;
-
+.body_class {
+    height: 600px;
+    margin-top: 40px;
+    margin-left: 30px;
+    margin-right: 10px;
 }
-.seach{
+.seach {
     height: 30px;
     border: 1px solid slategrey;
     border-radius: 4px;
-    box-shadow:2px 4px 6px rgba(0, 0, 0, 0.383) ;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.383);
 }
-.menuSeach{
+.menuSeach {
     display: flex;
     margin-top: 10px;
 
     justify-content: space-between;
-
 }
-.seachClass{
+.seachClass {
     /* margin-right: 10px; */
     width: 20%;
 }
-.seach{
+.seach {
     width: 100%;
 }
-.cm1{
+.cm1 {
     margin: 10px;
 }
-.rollcall{
-   width: 100px; 
-margin: 10px;
-border: 1px solid blue;
-padding: 5px 10px;
-color: blue;
-}
-.comment{
-    width: 100px; 
+.rollcall {
+    width: 100px;
     margin: 10px;
     border: 1px solid blue;
     padding: 5px 10px;
     color: blue;
 }
-.classRoom{
+.comment {
+    width: 100px;
+    margin: 10px;
+    border: 1px solid blue;
+    padding: 5px 10px;
+    color: blue;
+}
+.classRoom {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
 }
-.carClass{
+.carClass {
     margin-top: 10px;
-    
+
     padding-top: 5px;
     display: flex;
     text-align: start;
     border-top: 1px solid rgb(138, 138, 220);
 }
-.index{
+.index {
     margin-top: 10px;
     padding-top: 5px;
     display: flex;
-    
+
     text-align: start;
     /* border-top: 1px solid rgb(138, 138, 220); */
-
 }
 .carClass div {
     text-align: start;
     width: 20%;
-font-size: 22px;
-   
+    font-size: 22px;
 }
 .index div {
     font-size: 26px;
     text-align: start;
-   width: 20%;
-    color: #4CAF50;
-  
+    width: 20%;
+    color: #4caf50;
 }
-.table{
+.table {
     margin: 20px 30px;
     flex: 1 1 15%;
     /* width: 200px; */
@@ -175,12 +170,11 @@ font-size: 22px;
     /* padding-top:20px ; */
     /* border: 1px solid black; */
     border-radius: 6px;
-    
 }
-.lesson{
+.lesson {
     margin: 10px 20px;
 }
-.buoi{
+.buoi {
     margin-left: 20px;
     width: 100px;
     height: 30px;
@@ -188,21 +182,21 @@ font-size: 22px;
     border: 1px solid blue;
     color: blue;
 }
- /* CSS cho nút */
- .menu-button {
+/* CSS cho nút */
+.menu-button {
     padding: 10px 20px;
     cursor: pointer;
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
     border: none;
     border-radius: 4px;
     font-size: 16px;
     width: 100%;
     height: 100%;
-  }
+}
 
-  /* CSS cho menu */
-  .dropdown-menu {
+/* CSS cho menu */
+.dropdown-menu {
     display: none; /* Ẩn menu ban đầu */
     position: absolute;
     background-color: #f9f9f9;
@@ -211,19 +205,19 @@ font-size: 22px;
     border-radius: 4px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-  }
+}
 
-  .dropdown-menu a {
+.dropdown-menu a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-  }
+}
 
-  .dropdown-menu a:hover {
+.dropdown-menu a:hover {
     background-color: #f1f1f1;
-  }
-  .btnCls{
+}
+.btnCls {
     padding: 8px 28px;
     background-color: rgb(0, 115, 255);
     color: white;
@@ -231,11 +225,11 @@ font-size: 22px;
     border-radius: 6px;
     cursor: pointer;
 }
-.select{
+.select {
     padding: 15px 40px;
-    border: 0px ;
+    border: 0px;
     border-radius: 4px;
     font-size: 22px;
     color: rgb(229, 229, 244);
-    background-color: #4CAF50;
+    background-color: #4caf50;
 }
