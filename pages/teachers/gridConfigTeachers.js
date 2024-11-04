@@ -24,6 +24,11 @@ export const gridConfigTeachers = [
         headerName: "Giới tính",
         width: 300,
         align: "center",
+        customDisplay: (value) => {
+            return `<td style="border: 1px solid #e0e0e0; text-align: center">${
+                value == "male" ? "Nam" : "Nữ"
+            }</td>`;
+        },
     },
     {
         field: "email",
