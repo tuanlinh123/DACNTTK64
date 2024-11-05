@@ -9,23 +9,8 @@ export const getCodeRenderHeader = (gridConfigUsers) => {
         </tr>
     `;
 };
-const overlay = document.getElementById("overlay");
-const windowElement = document.getElementById("window");
 
-// Hàm mở cửa sổ
-function openWindow() {
-    overlay.style.display = "flex";
-    windowElement.style.animation = "openWindow 0.5s forwards";
-}
-
-// Hàm đóng cửa sổ
-function closeWindow() {
-    windowElement.style.animation = "closeWindow 0.5s forwards";
-    setTimeout(() => {
-        overlay.style.display = "none";
-    }, 500);
-}
-export const getCodeRenderGrid = (dataClasses, gridConfig) => {
+export const getCodeRenderGrid = (dataClasses, gridConfig, keyCode) => {
     return dataClasses
         .map((item, index) => {
             return `
@@ -41,7 +26,9 @@ export const getCodeRenderGrid = (dataClasses, gridConfig) => {
                         }
                         // Format cột chức năng
                         else if (item1.field === "function") {
-                            return item1.customDisplay();
+                            return item1.customDisplay(
+                                keyCode && item[keyCode]
+                            );
                         }
                         if (item1.customDisplay) {
                             return item1.customDisplay(item[item1.field]);
@@ -110,7 +97,6 @@ export const getCodeRenderNavbar = () => {
               <li><a href="#contact">Contact</a></li>
               <li>
                 <button
-                  style="width: 100px"
                   class="btn btn-outline-light my-2 my-sm-0 search-btn"
                   type="submit"
                   onclick="logOut()"
@@ -119,4 +105,22 @@ export const getCodeRenderNavbar = () => {
                 </button>
               </li>
             </ul>`;
+};
+
+export const getCodeRenderTableRoom = (numberOfTables) => {
+    let query = "";
+    for (let i = 1; i <= numberOfTables; i++) {
+        query += `
+      <select
+        style="width: 23% !important;"
+          class="form-select col-3 m-1"
+          aria-label="Default select example"
+          onclick="getListStudentCombo()"
+          onchange="selectStudentCombo()"
+      >
+          <option value="" selected>Bàn ${i}</option>
+      </select>
+    `;
+    }
+    return query;
 };

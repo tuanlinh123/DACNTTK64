@@ -8,8 +8,6 @@ body {
 }
 
 .container01 {
-    width: 90%;
-    margin: auto;
     display: flex;
     justify-content: space-between;
 }
@@ -21,7 +19,6 @@ header {
 }
 
 header nav ul {
-    margin-top: 30px;
     list-style-type: none;
     display: flex;
     gap: 1em;
@@ -162,7 +159,7 @@ footer {
     color: #4caf50;
 }
 .table {
-    margin: 20px 30px;
+    /* margin: 20px 30px; */
     flex: 1 1 15%;
     /* width: 200px; */
     height: 60px;
