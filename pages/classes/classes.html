@@ -18,88 +18,12 @@
             referrerpolicy="no-referrer"
         />
         <link rel="stylesheet" href="../../css/admin/admin.css" />
-        <link rel="stylesheet" href="../../css/style.css" />
         <script type="module" src="./classes.js"></script>
         <script src="../../core/globalFunction.js"></script>
-    <script type="module" src="./checkin.js"></script>
-    <style>
-            /* Style cho nền tối khi cửa sổ hiện lên */
-            .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                display: none;
-                align-items: flex-start;
-                justify-content: center;
-            }
-
-            /* Style cho cửa sổ */
-            .window {
-                margin-top: 60px;
-                width: 1080px;
-                height: 600px;
-                padding: 20px;
-                background-color: white;
-                border-radius: 10px;
-                text-align: center;
-                opacity: 0;
-                transform: scale(0.5);
-                animation: openWindow 0.5s forwards;
-            }
-
-            /* Animation khi mở cửa sổ */
-            @keyframes openWindow {
-                from {
-                    opacity: 0;
-                    transform: scale(0.5);
-                }
-                to {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-            }
-
-            /* Animation khi đóng cửa sổ */
-            @keyframes closeWindow {
-                from {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-                to {
-                    opacity: 0;
-                    transform: scale(0.5);
-                }
-            }
-        </style>
         <script>
-            var listStudent = [];
-            function getListStudentCombo(e) {
-                window.event.target.innerHTML += listStudent.filter(x => !x.isSelected).map(x => {
-                    return `<option value="${x.studentCode}">${x.studentName}</option>`
-                }).join('');
-            }
-            function selectStudentCombo(e) {
-                listStudent.find(x => x.studentCode == window.event.target.value).isSelected = true;
-            }
-            // Hàm mở cửa sổ
-            async function openWindow(classCode) {
-                // Lấy thông tin chi tiết lớp học
-                listStudent = await window.getStudentInClass(classCode);
-                const overlay = document.getElementById("overlay");
-                const windowElement = document.getElementById("window");
-                overlay.style.display = "flex";
-                windowElement.style.animation = "openWindow 0.5s forwards";
-            }
-            function closeWindow() {
-                const overlay = document.getElementById("overlay");
-                const windowElement = document.getElementById("window");
-                windowElement.style.animation = "closeWindow 0.5s forwards";
-                setTimeout(() => {
-                    overlay.style.display = "none";
-                }, 500);
+            const openDetail = (classCode) => {
+                // Open detail page with class code
+                window.location.href = `../classDetail/classDetail.html?classCode=${classCode}`;
             }
         </script>
     </head>
@@ -237,36 +161,6 @@
                 style="max-height: 30vh !important; overflow-y: auto"
               ></tbody>
             </table>
-      </div>
-    </div>
-    <div class="overlay" id="overlay">
-      <div class="window" id="window">
-        <h2>Quản lý lớp học</h2>
-        <p>This is a pop-up window with animation!</p>
-        <div class="cm1">
-          <div class="rollcall">Điểm danh</div>
-          <div class="lesson">
-            <span class="buoi">#1</span>
-            <span class="buoi">#2</span>
-            <span class="buoi">#3</span>
-            <span class="buoi">#4</span>
-            <span class="buoi">#5</span>
-            <span class="buoi">#6</span>
-            <span class="buoi">#7</span>
-            <span class="buoi">#8</span>
-            <span class="buoi">#9</span>
-            <span class="buoi">#10</span>
-            <span class="buoi">#11</span>
-            <span class="buoi">#12</span>
-            <span class="buoi">#13</span>
-          </div>
-          <div class="classRoom row"></div>
-          <div class="formNX"></div>
-        </div>
-        <button class="btnCls" >Lưu</button>
-        <div style="position: absolute; top: 12px; right: 12px; padding: 6px 10px;cursor: pointer; font-size: 24px; border-radius: 50%;" onclick="closeWindow()">
-            <i class="fa-solid fa-xmark"></i>
-        </div>
       </div>
     </div>
     <script

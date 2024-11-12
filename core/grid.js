@@ -106,21 +106,3 @@ export const getCodeRenderNavbar = () => {
               </li>
             </ul>`;
 };
-
-export const getCodeRenderTableRoom = (numberOfTables) => {
-    let query = "";
-    for (let i = 1; i <= numberOfTables; i++) {
-        query += `
-      <select
-        style="width: 23% !important;"
-          class="form-select col-3 m-1"
-          aria-label="Default select example"
-          onclick="getListStudentCombo()"
-          onchange="selectStudentCombo()"
-      >
-          <option value="" selected>Bàn ${i}</option>
-      </select>
-    `;
-    }
-    return query;
-};
