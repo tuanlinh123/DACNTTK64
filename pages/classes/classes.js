@@ -5,11 +5,8 @@ import {
     getCodeRenderGrid,
     getCodeRenderSidebar,
     getCodeRenderNavbar,
-    getCodeRenderTableRoom,
 } from "../../core/grid.js";
 window.onload = () => checkAccOnLoad();
-
-const ROOM_TABLE = 12;
 
 const renderGridClasses = async (dataClasses) => {
     if (!dataClasses) dataClasses = await getData("classes");
@@ -49,12 +46,4 @@ document.querySelector(".search-btn").addEventListener("click", onSearch);
 document.querySelector(".nav.nav-pills").innerHTML =
     getCodeRenderSidebar("classes");
 document.querySelector("nav").innerHTML = getCodeRenderNavbar();
-document.querySelector(".classRoom").innerHTML =
-    getCodeRenderTableRoom(ROOM_TABLE);
 renderGridClasses();
-
-window.getStudentInClass = async (classCode) => {
-    let allDetailClasses = await getData("classDetail");
-    let detailClass = allDetailClasses.find((x) => x.classCode == classCode);
-    return (detailClass && detailClass.students) || [];
-};

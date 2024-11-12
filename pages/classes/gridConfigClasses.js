@@ -44,7 +44,7 @@ export const gridConfigClasses = [
         align: "center",
         customDisplay: (classCode) => {
             return `<td style="border: 1px solid #e0e0e0; text-align: center">
-                <button type="button" onclick="openWindow('${classCode}')" class="btn btn-secondary">Chi tiết</button>
+                <button type="button" onclick="openDetail('${classCode}')" class="btn btn-secondary">Chi tiết</button>
             </td>`;
         },
     },
