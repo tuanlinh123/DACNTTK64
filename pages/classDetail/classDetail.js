@@ -176,6 +176,10 @@ window.changeTab = (type) => {
         case "attendance":
             genCodeTabAttendance();
             break;
+        case "comment":
+            break;
+        case "homework":
+            break;
         default:
             break;
     }
