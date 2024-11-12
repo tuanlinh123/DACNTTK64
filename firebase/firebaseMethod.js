@@ -85,7 +85,9 @@ export const logIn = async (email, password, callback) => {
 export async function getData(collectionName) {
     const dataCol = collection(db, collectionName);
     const dataSnapshot = await getDocs(dataCol);
-    const dataList = dataSnapshot.docs.map((doc) => doc.data());
+    const dataList = dataSnapshot.docs.map((doc) => {
+        return { ...doc.data(), id: doc.id };
+    });
     return dataList;
 }
 /**
