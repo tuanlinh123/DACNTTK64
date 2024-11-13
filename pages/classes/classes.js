@@ -6,7 +6,14 @@ import {
     getCodeRenderSidebar,
     getCodeRenderNavbar,
 } from "../../core/grid.js";
-window.onload = () => checkAccOnLoad();
+window.onload = () => {
+    checkAccOnLoad();
+    document.querySelector(".search-btn").addEventListener("click", onSearch);
+    document.querySelector(".nav.nav-pills").innerHTML =
+        getCodeRenderSidebar("classes");
+    document.querySelector("nav").innerHTML = getCodeRenderNavbar();
+    renderGridClasses();
+};
 
 const renderGridClasses = async (dataClasses) => {
     if (!dataClasses) dataClasses = await getData("classes");
@@ -38,12 +45,5 @@ const onSearch = async () => {
         ));
     statusCodeInput &&
         (dataClasses = dataClasses.filter((x) => x.status == statusCodeInput));
-
     renderGridClasses(dataClasses);
 };
-
-document.querySelector(".search-btn").addEventListener("click", onSearch);
-document.querySelector(".nav.nav-pills").innerHTML =
-    getCodeRenderSidebar("classes");
-document.querySelector("nav").innerHTML = getCodeRenderNavbar();
-renderGridClasses();

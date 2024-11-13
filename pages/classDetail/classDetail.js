@@ -1,7 +1,7 @@
 import { getData, updateData } from "../../firebase/firebaseMethod.js";
 import { getCodeRenderSidebar, getCodeRenderNavbar } from "../../core/grid.js";
 
-window.onload = () => {
+window.onload = async () => {
     checkAccOnLoad();
     if (!getClassCode()) {
         window.location.href = "../classes/classes.html";
@@ -10,10 +10,9 @@ window.onload = () => {
             getCodeRenderSidebar("classes");
         document.querySelector("nav").innerHTML = getCodeRenderNavbar();
         document.querySelector(".class-code").innerText = getClassCode();
-        genCodeTabInformation();
+        await genCodeTabInformation();
     }
 };
-
 const getClassCode = () => {
     let searchQuery = window.location.search.slice(1).split("&")[0].split("=");
     return searchQuery[1];
@@ -54,7 +53,7 @@ const genCodeTabInformation = async () => {
         },
     ];
 
-    let query = `<button type="button" class="btn btn-success mb-3" style="float: right">
+    let query = `<button onclick="editInfoClass()" type="button" class="btn btn-success mb-3" style="float: right">
                     Sửa thông tin
                 </button>`;
 
@@ -85,9 +84,14 @@ const genCodeTabInformation = async () => {
 };
 
 const genCodeTabAttendance = async () => {
+    if (!checkRole("teacher")) {
+        document.querySelector(".content-tab").innerHTML =
+            "Bạn không có quyền truy cập chức năng này";
+        return;
+    }
     let query = `
-        <select class="form-select mb-4 select-lesson" aria-label="Default select example" onchange="onChangeLesson('attendance')">
-            <option selected>Chọn buổi học</option>
+        <select class="form-select mb-4 select-lesson" onchange="onChangeLesson('attendance')">
+            <option>Chọn buổi học</option>
             ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
                 .map((x) => `<option value="${x}">Buổi ${x}</option>`)
                 .join("")}
@@ -98,9 +102,14 @@ const genCodeTabAttendance = async () => {
 };
 
 const genCodeTabComment = async () => {
+    if (!checkRole("teacher")) {
+        document.querySelector(".content-tab").innerHTML =
+            "Bạn không có quyền truy cập chức năng này";
+        return;
+    }
     let query = `
-        <select class="form-select mb-4 select-lesson" aria-label="Default select example" onchange="onChangeLesson('comments')">
-            <option selected>Chọn buổi học</option>
+        <select class="form-select mb-4 select-lesson" onchange="onChangeLesson('comments')">
+            <option>Chọn buổi học</option>
             ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
                 .map((x) => `<option value="${x}">Buổi ${x}</option>`)
                 .join("")}
@@ -113,6 +122,13 @@ const genCodeTabComment = async () => {
 const genCodeTabHomework = async () => {
     document.querySelector(".content-tab").innerHTML =
         "Chức năng đang phát triển";
+};
+
+window.editInfoClass = () => {
+    if (!checkRole("admin")) {
+        alert("Bạn không có quyền sửa thông tin lớp học");
+        return;
+    }
 };
 
 window.onChangeLesson = async (tabCode) => {
