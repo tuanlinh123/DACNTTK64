@@ -6,7 +6,14 @@ import {
     getCodeRenderSidebar,
     getCodeRenderNavbar,
 } from "../../core/grid.js";
-window.onload = () => checkAccOnLoad();
+window.onload = () => {
+    checkAccOnLoad();
+    document.querySelector(".search-btn").addEventListener("click", onSearch);
+    document.querySelector(".nav.nav-pills").innerHTML =
+        getCodeRenderSidebar("teachers");
+    document.querySelector("nav").innerHTML = getCodeRenderNavbar();
+    renderGridUsers();
+};
 const renderGridUsers = async (dataTeachers) => {
     !dataTeachers && (dataTeachers = await getData("users"));
     dataTeachers = dataTeachers.filter((x) => x.role == "teacher");
@@ -30,9 +37,3 @@ const onSearch = async () => {
     );
     renderGridUsers(dataTeachers);
 };
-
-document.querySelector(".search-btn").addEventListener("click", onSearch);
-document.querySelector(".nav.nav-pills").innerHTML =
-    getCodeRenderSidebar("teachers");
-document.querySelector("nav").innerHTML = getCodeRenderNavbar();
-renderGridUsers();
