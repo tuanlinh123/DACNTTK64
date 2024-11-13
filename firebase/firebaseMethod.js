@@ -24,7 +24,6 @@ export const signInWithGoogle = async () => {
     try {
         const ggProvider = new GoogleAuthProvider(auth);
         let result = await signInWithPopup(auth, ggProvider);
-        console.log(result);
         console.log("Login successfully");
     } catch (error) {
         console.error(error);
@@ -43,8 +42,6 @@ export const signUp = async (email, password) => {
             password
         );
         const user = userCredential.user;
-        console.log(userCredential);
-        console.log(user);
         // Send email verification
         sendEmailVerification(user)
             .then(() => {

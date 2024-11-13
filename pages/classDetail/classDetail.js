@@ -1,10 +1,18 @@
 import { getData, updateData } from "../../firebase/firebaseMethod.js";
 import { getCodeRenderSidebar, getCodeRenderNavbar } from "../../core/grid.js";
-window.onload = () => checkAccOnLoad();
 
-document.querySelector(".nav.nav-pills").innerHTML =
-    getCodeRenderSidebar("classes");
-document.querySelector("nav").innerHTML = getCodeRenderNavbar();
+window.onload = () => {
+    checkAccOnLoad();
+    if (!getClassCode()) {
+        window.location.href = "../classes/classes.html";
+    } else {
+        document.querySelector(".nav.nav-pills").innerHTML =
+            getCodeRenderSidebar("classes");
+        document.querySelector("nav").innerHTML = getCodeRenderNavbar();
+        document.querySelector(".class-code").innerText = getClassCode();
+        genCodeTabInformation();
+    }
+};
 
 const getClassCode = () => {
     let searchQuery = window.location.search.slice(1).split("&")[0].split("=");
@@ -20,8 +28,6 @@ const getClassDetailByCode = async () => {
     let details = await getData("classDetail");
     return details.find((x) => x.classCode == getClassCode());
 };
-
-document.querySelector(".class-code").innerText = getClassCode();
 
 const genCodeTabInformation = async () => {
     let detailClass = await getClassInfoByCode();
@@ -48,7 +54,11 @@ const genCodeTabInformation = async () => {
         },
     ];
 
-    let query = infoTabConfig
+    let query = `<button type="button" class="btn btn-success mb-3" style="float: right">
+                    Sửa thông tin
+                </button>`;
+
+    query += infoTabConfig
         .map((item) => {
             return `
             <div class="input-group mb-3">
@@ -76,7 +86,7 @@ const genCodeTabInformation = async () => {
 
 const genCodeTabAttendance = async () => {
     let query = `
-        <select class="form-select mb-4 select-lesson" aria-label="Default select example" onchange="onChangeLesson()">
+        <select class="form-select mb-4 select-lesson" aria-label="Default select example" onchange="onChangeLesson('attendance')">
             <option selected>Chọn buổi học</option>
             ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
                 .map((x) => `<option value="${x}">Buổi ${x}</option>`)
@@ -87,7 +97,25 @@ const genCodeTabAttendance = async () => {
     document.querySelector(".content-tab").innerHTML = query;
 };
 
-window.onChangeLesson = async () => {
+const genCodeTabComment = async () => {
+    let query = `
+        <select class="form-select mb-4 select-lesson" aria-label="Default select example" onchange="onChangeLesson('comments')">
+            <option selected>Chọn buổi học</option>
+            ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+                .map((x) => `<option value="${x}">Buổi ${x}</option>`)
+                .join("")}
+        </select>
+        <div class="students-attend"></div>
+    `;
+    document.querySelector(".content-tab").innerHTML = query;
+};
+
+const genCodeTabHomework = async () => {
+    document.querySelector(".content-tab").innerHTML =
+        "Chức năng đang phát triển";
+};
+
+window.onChangeLesson = async (tabCode) => {
     let selectedLesson = event.target.value;
     let attendanceType = [
         { label: "Có mặt", value: 1 },
@@ -101,38 +129,51 @@ window.onChangeLesson = async () => {
         <ul class="list-group">
             ${detailClass.students
                 .map((x) => {
+                    let inputCodeByTabCode =
+                        tabCode == "attendance"
+                            ? `
+                        <select class="form-select type-attend-${
+                            x.studentCode
+                        }" style="width: 300px">
+                            <option selected>Chọn điểm danh</option>
+                            ${attendanceType
+                                .map(
+                                    (y) =>
+                                        `<option value="${y.value}">${y.label}</option>`
+                                )
+                                .join("")}
+                        </select>
+                    `
+                            : `
+                        <textarea style="width: 1000px" type="text" class="form-control type-attend-${x.studentCode}" placeholder="Nhập nhận xét"></textarea>
+                    `;
+
                     return `
                         <li class="list-group-item d-flex" style="align-items: center; justify-content: space-between;">
                             ${x.studentName}
-                            <select class="form-select type-attend-${
-                                x.studentCode
-                            }" style="width: 300px">
-                                <option selected>Chọn điểm danh</option>
-                                ${attendanceType
-                                    .map(
-                                        (y) =>
-                                            `<option value="${y.value}">${y.label}</option>`
-                                    )
-                                    .join("")}
-                            </select>
+                            ${inputCodeByTabCode}
                         </li>
                     `;
                 })
                 .join("")}
         </ul>
-        <button onclick="saveAttendance()" type="submit" class="btn btn-primary my-3" style="float: right">Lưu thông tin</button>
+        <button onclick="${
+            tabCode == "attendace" ? "saveAttendance()" : "saveComments()"
+        }" type="submit" class="btn btn-primary my-3" style="float: right">Lưu thông tin</button>
     `;
     document.querySelector(".students-attend").innerHTML = query;
 
-    let attendanceInfo = detailClass.detailLessons.find(
+    // cập nhật lại giá trị điểm danh nếu đã điểm danh trước đó
+    let detailLessons = detailClass.detailLessons.find(
         (x) => x.lessonIndex == selectedLesson
-    )?.attendance;
-    if (!attendanceInfo || attendanceInfo.length == 0) {
+    );
+    let attendanceCommentInfo = detailLessons && detailLessons[tabCode];
+    if (!attendanceCommentInfo || attendanceCommentInfo.length == 0) {
         return;
     } else {
-        attendanceInfo.forEach((x) => {
+        attendanceCommentInfo.forEach((x) => {
             document.querySelector(`.type-attend-${x.studentCode}`).value =
-                x.type;
+                tabCode == "attendance" ? x.type : x.value;
         });
     }
 };
@@ -164,6 +205,34 @@ window.saveAttendance = async () => {
     alert("Lưu thông tin thành công!");
 };
 
+window.saveComments = async () => {
+    let payload = [];
+    let detailClass = await getClassDetailByCode();
+    detailClass.students.forEach((x) => {
+        payload.push({
+            studentCode: x.studentCode,
+            value: document.querySelector(`.type-attend-${x.studentCode}`)
+                .value,
+        });
+    });
+    let attendanceInfo = detailClass.detailLessons.find(
+        (x) => x.lessonIndex == document.querySelector(".select-lesson").value
+    );
+    if (attendanceInfo) {
+        attendanceInfo.comments = payload;
+    } else {
+        detailClass.detailLessons.push({
+            lessonIndex: Number.parseInt(
+                document.querySelector(".select-lesson").value
+            ),
+            attendance: "",
+            comments: payload,
+        });
+    }
+    await updateData("classDetail", detailClass.id, detailClass);
+    alert("Lưu thông tin thành công!");
+};
+
 window.changeTab = (type) => {
     document
         .querySelectorAll(".nav-link")
@@ -177,11 +246,12 @@ window.changeTab = (type) => {
             genCodeTabAttendance();
             break;
         case "comment":
+            genCodeTabComment();
             break;
         case "homework":
+            genCodeTabHomework();
             break;
         default:
             break;
     }
 };
-genCodeTabInformation();
