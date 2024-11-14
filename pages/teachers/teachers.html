@@ -19,9 +19,60 @@
     />
     <link rel="stylesheet" href="../../css/admin/admin.css" />
     <script type="module" src="./teachers.js"></script>
+    <script src="./update.js" type="module"></script>
     <script src="../../core/globalFunction.js"></script>
   </head>
   <body class="row">
+    <!-- pop up -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+      style="width: 100%"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Thêm giảng viên
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="current"><span>Email</span> <input class="addEmail" type="email" /></div>
+            <div><span>Password</span><input class="addPassword" type="email" /></div>
+            <div><span>Fullname</span><input class="addFullname" type="email" /></div>
+            <div>
+              <label for="gender">Giới tính</label>
+              <select id="cleGender" name="gender">
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+              </select>
+            </div>
+            <div><span>Ngày sinh</span><input class="addDate" type="date" /></div>
+            <div><span>Số điện thoại</span><input class="addSdt" type="text" /></div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button   class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- SIDEBAR -->
     <div
       class="sidebar d-flex flex-column flex-shrink-0 bg-light col-1"
@@ -50,7 +101,14 @@
           "
         >
           <h1 style="margin: 12px 0">Giảng viên</h1>
-          <button type="button" class="btn btn-success">Thêm giảng viên</button>
+          <button
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            class="btn btn-success"
+          >
+            Thêm giảng viên
+          </button>
         </div>
         <!-- Search bar -->
         <form
