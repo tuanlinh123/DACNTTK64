@@ -9,6 +9,8 @@ export const getCodeRenderHeader = (gridConfigUsers) => {
         </tr>
     `;
 };
+    const overlay = document.getElementById("overlay");
+    const windowElement = document.getElementById("window");
 
 export const getCodeRenderGrid = (dataClasses, gridConfig, keyCode) => {
     return dataClasses
