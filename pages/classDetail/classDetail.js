@@ -1,4 +1,4 @@
-import { getData, updateData } from "../../firebase/firebaseMethod.js";
+import { addData, getData, updateData } from "../../firebase/firebaseMethod.js";
 import { getCodeRenderSidebar, getCodeRenderNavbar } from "../../core/grid.js";
 
 window.onload = async () => {
@@ -120,8 +120,116 @@ const genCodeTabComment = async () => {
 };
 
 const genCodeTabHomework = async () => {
-    document.querySelector(".content-tab").innerHTML =
-        "Chức năng đang phát triển";
+    let query = `
+        <select class="form-select mb-4 select-lesson" onchange="onChangeHomework()">
+            <option>Chọn buổi học</option>
+            ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+                .map((x) => `<option value="${x}">Buổi ${x}</option>`)
+                .join("")}
+        </select>
+        <ol class="multiple-questions-hw"></ol>
+    `;
+    document.querySelector(".content-tab").innerHTML = query;
+};
+
+let current_answer = {
+    0: null,
+    1: null,
+    2: null,
+    3: null,
+    4: null,
+    5: null,
+    6: null,
+    7: null,
+    8: null,
+    9: null,
+    10: null,
+};
+window.handleChooseAnswer = (questionIndex) => {
+    current_answer[questionIndex] = event.target.value;
+};
+
+window.onChangeHomework = async () => {
+    let selectedLesson = event.target.value;
+    let detailClass = await getClassDetailByCode();
+    let thisUserHomework = detailClass?.detailLessons?.find(
+        (x) => x.lessonIndex == selectedLesson
+    )?.homework;
+    // Nếu học sinh thì cho làm bài
+    if (!checkRole("teachers")) {
+        let studentCode = JSON.parse(localStorage.getItem("userInfo")).userCode;
+        let thisUserAnswer = thisUserHomework?.find(
+            (x) => x.studentCode == studentCode
+        );
+        if (thisUserAnswer) {
+            document.querySelector(".multiple-questions-hw").innerHTML =
+                "Bạn đã hoàn thành bài tập";
+            return;
+        }
+        let courseHWData = await getData("homework-data");
+        let homeworkData = courseHWData?.find(
+            (x) => x.lessonIndex == selectedLesson
+        );
+        let queryMultipleQuestions = homeworkData.data
+            .map((x, questionIndex) => {
+                return `
+                <li class="mb-2">
+                    ${x.titleQuestion} <br/>
+                    <div class="d-flex mt-2" style="flex-direction: column; row-gap: 12px">
+                        ${x.answerList
+                            .map((y) => {
+                                return `
+                                    <div>
+                                        <input onchange="handleChooseAnswer(${questionIndex})" ${
+                                    thisUserAnswer &&
+                                    thisUserAnswer[questionIndex]
+                                        ? "selected"
+                                        : ""
+                                } type="radio" value="${questionIndex}" name="${`question${questionIndex}`}" class="question${questionIndex}"> ${y}
+                                    </div>`;
+                            })
+                            .join("")}
+                    </div>
+                </li>
+            `;
+            })
+            .join("");
+        document.querySelector(".multiple-questions-hw").innerHTML = `
+                ${queryMultipleQuestions} 
+                <button onclick="submitHomework()" class="btn btn-primary my-3" style="float: right">Nộp bài</button>
+            `;
+    } else {
+        let query = `
+            <h6>Danh sách học sinh</h6>
+            <ul class="list-group">
+                ${detailClass.students
+                    .map((x) => {
+                        let studentAnswer = thisUserHomework?.find(
+                            (y) => y.studentCode == x.studentCode
+                        );
+                        return `
+                            <li class="list-group-item d-flex" style="align-items: center; justify-content: space-between;">
+                                ${x.studentName}
+                                <div>
+                                    ${
+                                        studentAnswer
+                                            ? "Đã hoàn thành"
+                                            : "Chưa hoàn thành"
+                                    }
+                                </div>
+                            </li>
+                            ${
+                                studentAnswer
+                                    ? JSON.stringify(studentAnswer.answer)
+                                    : ""
+                            }
+                        `;
+                    })
+                    .join("")}
+            </ul>
+        `;
+        document.querySelector(".multiple-questions-hw").innerHTML = query;
+    }
 };
 
 window.editInfoClass = () => {
@@ -174,7 +282,7 @@ window.onChangeLesson = async (tabCode) => {
                 .join("")}
         </ul>
         <button onclick="${
-            tabCode == "attendace" ? "saveAttendance()" : "saveComments()"
+            tabCode == "attendance" ? "saveAttendance()" : "saveComments()"
         }" type="submit" class="btn btn-primary my-3" style="float: right">Lưu thông tin</button>
     `;
     document.querySelector(".students-attend").innerHTML = query;
@@ -216,6 +324,28 @@ window.saveAttendance = async () => {
             attendance: payload,
             comment: "",
         });
+    }
+    await updateData("classDetail", detailClass.id, detailClass);
+    alert("Lưu thông tin thành công!");
+};
+window.submitHomework = async () => {
+    let payload = [];
+    let detailClass = await getClassDetailByCode();
+    let studentCode = JSON.parse(localStorage.getItem("userInfo")).userCode;
+    payload.push({
+        studentCode: studentCode,
+        answer: current_answer,
+    });
+    let detailInfo = detailClass.detailLessons.find(
+        (x) => x.lessonIndex == document.querySelector(".select-lesson").value
+    );
+    if (detailInfo.homework) {
+        let indexX = detailInfo.homework.findIndex(
+            (x) => x.studentCode == studentCode
+        );
+        detailInfo.homework[indexX] = payload;
+    } else {
+        detailInfo.homework = payload;
     }
     await updateData("classDetail", detailClass.id, detailClass);
     alert("Lưu thông tin thành công!");

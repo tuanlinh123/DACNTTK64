@@ -30,53 +30,83 @@
     <body class="row">
         <!-- Button trigger modal -->
         <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-        style="width: 100%"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Thêm giảng viên
-              </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+            style="width: 100%"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                            Thêm lớp
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="current">
+                            <span>Mã lớp</span>
+                            <input class="form-control classcode" type="text" />
+                        </div>
+                        <div>
+                            <span>Mã cơ sở</span
+                            ><input class="form-control basecode" type="text" />
+                        </div>
+                        <div>
+                            <span>Tên cơ sở</span
+                            ><input class="form-control basename" type="text" />
+                        </div>
+                        <div>
+                            <span>Mã giảng viên</span
+                            ><input
+                                class="form-control teachercode"
+                                type="text"
+                            />
+                        </div>
+                        <div>
+                            <span>Tên giảng viên</span
+                            ><input
+                                class="form-control teachername"
+                                type="text"
+                            />
+                        </div>
+                        <div>
+                            <span
+                                >Mã học sinh (cách nhau bằng dấu chấm
+                                phẩy)</span
+                            ><input
+                                class="form-control studentcode"
+                                type="text"
+                                placeholder="HV01;HV02"
+                            />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Đóng
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            onclick="handleAddClass()"
+                        >
+                            Thêm
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-              <div class="current"><span>Email</span> <input type="email" /></div>
-              <div><span>Password</span><input type="email" /></div>
-              <div><span>Fullname</span><input type="email" /></div>
-              <div>
-                <label for="gender">Giới tính</label>
-                <select id="cleGender" name="gender">
-                  <option value="red">Nữ</option>
-                  <option value="green">Nam</option>
-                </select>
-              </div>
-              <div><span>Ngày sinh</span><input type="date" /></div>
-              <div><span>Số điện thoại</span><input type="text" /></div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
         </div>
-      </div>
         <!-- SIDEBAR -->
         <div
             class="sidebar d-flex flex-column flex-shrink-0 bg-light col-1"
@@ -107,7 +137,12 @@
                     "
                 >
                     <h1 style="margin: 12px 0">Lớp học</h1>
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">
+                    <button
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        class="btn btn-success"
+                    >
                         Thêm lớp
                     </button>
                 </div>

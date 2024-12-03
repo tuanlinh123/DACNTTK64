@@ -1,5 +1,5 @@
 import { gridConfigClasses } from "./gridConfigClasses.js";
-import { getData } from "../../firebase/firebaseMethod.js";
+import { addData, getData } from "../../firebase/firebaseMethod.js";
 import {
     getCodeRenderHeader,
     getCodeRenderGrid,
@@ -46,4 +46,37 @@ const onSearch = async () => {
     statusCodeInput &&
         (dataClasses = dataClasses.filter((x) => x.status == statusCodeInput));
     renderGridClasses(dataClasses);
+};
+
+window.handleAddClass = async () => {
+    let users = await getData("users");
+    let students = users.filter((x) => x.role == "student");
+
+    let selectedStudent = document
+        .querySelector(".form-control.studentcode")
+        .split(";");
+    let selectedStudentLst = students
+        .filter((x) => selectedStudent.includes(x.studentCode))
+        .map((x) => {
+            return {
+                studentCode: x.studentCode,
+                studentName: x.fullName,
+            };
+        });
+    let newData = {
+        baseCode: document.querySelector(".form-control.basecode"),
+        baseName: document.querySelector(".form-control.basename"),
+        classCode: document.querySelector(".form-control.classcode"),
+        numberOfStudents: selectedStudentLst.length,
+        status: "Running",
+        teacherCode: document.querySelector(".form-control.teachercode"),
+        teacherName: document.querySelector(".form-control.teachername"),
+    };
+    await addData("classes", newData);
+    await addData(`classDetail`, {
+        detailLessons: [],
+        students: selectedStudentLst,
+        classCode: document.querySelector(".form-control.classcode"),
+    });
+    alert("Thêm lớp thành công");
 };
